@@ -133,7 +133,7 @@ def create_uuid():
 def search():
     global found
     found = False
-    #path to your name
+	#your name in place of "yourname"
     with open('C:\\Users\\yourname\\Desktop\\pythonGame\\users\\{0}.txt'.format("users"), 'r') as v:
         searchlines = v.readlines()
         for e in searchlines:
@@ -181,7 +181,7 @@ def save_file():
 
 
 def adduser():
-    #path to your folder
+	#your name in place of "yourname"
     path_user = 'C:\\Users\\yourname\\Desktop\\pythonGame\\users\\{0}.txt'.format("users")
     with open(path_user, 'a') as y:
         y.write(save_name)
@@ -200,7 +200,7 @@ def addfile():
     global sec_question_1_answer
     global sec_question_2_answer
     global sec_question_3_answer
-    #path to your folder
+	#your name in place of "yourname"
     path = 'C:\\Users\\yourname\\Desktop\\pythonGame\\saves\\{0}.json'.format(save_name)
     create_uuid()
     find_time()
@@ -292,7 +292,7 @@ def load_file():
     sec_2_ans_flag = False
     sec_3_ans_flag = False
     load_name = input("username: ")
-    #path to the folder
+	#your name in place of "yourname"
     path_two = 'C:\\Users\\yourname\\Desktop\\pythonGame\\saves\\{0}.json'.format(load_name)
     with open(path_two, 'r') as g:
         u = json.load(g)
@@ -393,6 +393,114 @@ def sleep(t):
     time.sleep(t)
 
 
+def change_key_bindings():
+    global answer
+    answer = input("name of clicker you want to change. choices are \n" + clicker.name + "\n" + grandma.name + "\n"
+                   + auto_oven.name + "\n" + factory.name + "\n" + mine.name + "\n" + epic.name + "\n" + portal.name
+                   + "\n" + airship.name + "\n" + carrier.name + "\nremember caps in a name  is important").strip()
+    if answer == clicker.name:
+        clicker.key = input("new key: ")
+    elif answer == grandma.name:
+        grandma.key = input("new key: ")
+    elif answer == auto_oven.name:
+        auto_oven.key = input("new key: ")
+    elif answer == factory.name:
+        factory.key = input("new key: ")
+    elif answer == mine.name:
+        mine.key = input("new key: ")
+    elif answer == epic.name:
+        epic.key = input("new key: ")
+    elif answer == portal.name:
+        portal.key = input("new key: ")
+    elif answer == airship.name:
+        airship.key = input("new key: ")
+    elif answer == carrier.name:
+        carrier.key = input("new key: ")
+    else:
+        print("try again name not found")
+
+
+def change_name():
+    global answer
+    answer = input("name of clicker you want to change. choices are \n" + clicker.name + "\n" + grandma.name + "\n"
+                   + auto_oven.name + "\n" + factory.name + "\n" + mine.name + "\n" + epic.name + "\n" + portal.name
+                   + "\n" + airship.name + "\n" + carrier.name + "\nremember caps in a name  is important").strip()
+    if answer == clicker.name:
+        clicker.name = input("new name: ")
+    elif answer == grandma.name:
+        grandma.name = input("new name: ")
+    elif answer == auto_oven.name:
+        auto_oven.name = input("new name: ")
+    elif answer == factory.name:
+        factory.name = input("new name: ")
+    elif answer == mine.name:
+        mine.name = input("new name: ")
+    elif answer == epic.name:
+        epic.name = input("new name: ")
+    elif answer == portal.name:
+        portal.name = input("new name: ")
+    elif answer == airship.name:
+        airship.name = input("new name: ")
+    elif answer == carrier.name:
+        carrier.name = input("new name: ")
+    else:
+        print("try again name not found")
+
+
+def change_price():
+    global answer
+    answer = input("name of clicker you want to change. choices are \n" + clicker.name + "\n" + grandma.name + "\n"
+                   + auto_oven.name + "\n" + factory.name + "\n" + mine.name + "\n" + epic.name + "\n" + portal.name
+                   + "\n" + airship.name + "\n" + carrier.name + "\nremember caps in a name  is important").strip()
+    if answer == clicker.name:
+        clicker.price = int(input("new price: "))
+    elif answer == grandma.name:
+        grandma.price = int(input("new price: "))
+    elif answer == auto_oven.name:
+        auto_oven.price = int(input("new price: "))
+    elif answer == factory.name:
+        factory.price = int(input("new price: "))
+    elif answer == mine.name:
+        mine.price = int(input("new price: "))
+    elif answer == epic.name:
+        epic.price = int(input("new price: "))
+    elif answer == portal.name:
+        portal.price = int(input("new price: "))
+    elif answer == airship.name:
+        airship.price = int(input("new price: "))
+    elif answer == carrier.name:
+        carrier.price = int(input("new price: "))
+    else:
+        print("try again name not found")
+
+
+def change_cps():
+    global answer
+    answer = input("name of clicker you want to change. choices are \n" + clicker.name + "\n" + grandma.name + "\n"
+                   + auto_oven.name + "\n" + factory.name + "\n" + mine.name + "\n" + epic.name + "\n" + portal.name
+                   + "\n" + airship.name + "\n" + carrier.name + "\nremember caps in a name  is important").strip()
+    if answer == clicker.name:
+        clicker.clicks_per_second = int(input("new clicks per sec: "))
+    elif answer == grandma.name:
+        grandma.clicks_per_second = int(input("new clicks per sec: "))
+    elif answer == auto_oven.name:
+        auto_oven.clicks_per_second = int(input("new clicks per sec: "))
+    elif answer == factory.name:
+        factory.clicks_per_second = int(input("new clicks per sec: "))
+    elif answer == mine.name:
+        mine.clicks_per_second = int(input("new clicks per sec: "))
+    elif answer == epic.name:
+        epic.clicks_per_second = int(input("new clicks per sec: "))
+    elif answer == portal.name:
+        portal.clicks_per_second = int(input("new clicks per sec: "))
+    elif answer == airship.name:
+        airship.clicks_per_second = int(input("new clicks per sec: "))
+    elif answer == carrier.name:
+        carrier.clicks_per_second = int(input("new clicks per sec: "))
+    else:
+        print("try again name not found")
+
+
 def buying(ans):
     global money
     global rate
@@ -406,7 +514,7 @@ def buying(ans):
     money = money
     if ans == clicker.key and money > clicker.price:
         print("you bought a " + str(clicker.name))
-        clicker.cps(1)
+        clicker.cps(clicker.clicks_per_second)
         clicker.set_rate()
         rate = rate + clicker.clicks_per_second
         money = money - clicker.price
@@ -414,7 +522,7 @@ def buying(ans):
 
     elif ans == grandma.key and money > grandma.price:
         print("you bought a " + str(grandma.name))
-        grandma.cps(5)
+        grandma.cps(grandma.clicks_per_second)
         grandma.set_rate()
         rate = rate + grandma.clicks_per_second
         money = money - grandma.price
@@ -422,7 +530,7 @@ def buying(ans):
 
     elif ans == auto_oven.key and money > auto_oven.price:
         print("you bought an auto_oven!")
-        auto_oven.cps(10)
+        auto_oven.cps(auto_oven.clicks_per_second)
         auto_oven.set_rate()
         rate = rate + auto_oven.clicks_per_second
         money = money - auto_oven.price
@@ -430,7 +538,7 @@ def buying(ans):
 
     elif ans == factory.key and money > factory.price:
         print("you bought a " + str(factory.name))
-        factory.cps(15)
+        factory.cps(factory.clicks_per_second)
         factory.set_rate()
         rate = rate + factory.clicks_per_second
         money = money - factory.price
@@ -438,7 +546,7 @@ def buying(ans):
 
     elif ans == mine.key and money > mine.price:
         print("you bought a " + str(mine.name))
-        mine.cps(20)
+        mine.cps(mine.clicks_per_second)
         mine.set_rate()
         rate = rate + mine.clicks_per_second
         money = money - mine.price
@@ -446,7 +554,7 @@ def buying(ans):
 
     elif ans == epic.key and money > epic.price:
         print("you bought an " + str(epic.name))
-        epic.cps(25)
+        epic.cps(epic.clicks_per_second)
         epic.set_rate()
         rate = rate + epic.clicks_per_second
         money = money - epic.price
@@ -454,7 +562,7 @@ def buying(ans):
 
     elif ans == portal.key and money > portal.price:
         print("you bought a " + str(portal.name))
-        portal.cps(30)
+        portal.cps(portal.clicks_per_second)
         portal.set_rate()
         rate = rate + portal.clicks_per_second
         money = money - portal.price
@@ -462,7 +570,7 @@ def buying(ans):
 
     elif ans == airship.key and money > airship.price:
         print("you bought a " + str(airship.name))
-        airship.cps(35)
+        airship.cps(airship.clicks_per_second)
         airship.set_rate()
         rate = rate + airship.clicks_per_second
         money = money - airship.price
@@ -470,11 +578,19 @@ def buying(ans):
 
     elif ans == carrier.key and money > carrier.price:
         print("you bought a " + str(carrier.name))
-        carrier.cps(40)
+        carrier.cps(carrier.clicks_per_second)
         carrier.set_rate()
         rate = rate + carrier.clicks_per_second
         money = money - carrier.price
         loaded = True
+    elif ans == 'change keys':
+        change_key_bindings()
+    elif ans == 'change name':
+        change_name()
+    elif ans == 'change price':
+        change_price()
+    elif ans == 'change cps':
+        change_cps()
     elif ans == 'rate':
         print("your rate is: " + str(rate))
         loaded = True
