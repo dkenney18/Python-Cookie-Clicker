@@ -3,6 +3,7 @@ import random
 import string
 import subprocess as sp
 import json
+import os
 
 global i
 global total_money
@@ -13,6 +14,8 @@ global x
 global gem
 global loaded
 global boost_rate
+global count
+
 loaded = False
 rate = 0
 money = 11
@@ -22,14 +25,38 @@ i = 1
 total_money = 0
 tax = 0
 boost_rate = 1
+count = 0
+name = "guest"
+file_path = os.getcwd() + "/pythonGame/users/"
+directory = os.path.dirname(file_path)
+if not os.path.exists(directory):
+    os.makedirs(directory)
+file = os.getcwd() + "/pythonGame/users/users.txt"
+fptr = open(file, "w")
+file_path = os.getcwd() + "/pythonGame/saves/"
+directory = os.path.dirname(file_path)
+if not os.path.exists(directory):
+    os.makedirs(directory)
+
+
+
 
 
 def invest():
     global tax
     global total_money
     global money
-    tax = 0.48
+    tax = 1.30
     total_money = tax * money
+    money = total_money - money
+
+
+def good_sayings():
+    sayings = ["good choice {0}".format(name), "Is there no end to {0}'s choices?".format(name),
+               "only less then what {0} wants".format(name),
+               "a good thing {0} can wait".format(name),
+               "{0} likes this".format(name), "you are awesome {0}".format(name), "{0} buys great things".format(name)]
+    print(sayings[random.randrange(0, len(sayings))])
 
 
 class Clicker:
@@ -133,8 +160,7 @@ def create_uuid():
 def search():
     global found
     found = False
-	#your name in place of "yourname"
-    with open('C:\\Users\\yourname\\Desktop\\pythonGame\\users\\{0}.txt'.format("users"), 'r') as v:
+    with open(os.getcwd() + '\\pythonGame\\users\\{0}.txt'.format("users"), 'r') as v:
         searchlines = v.readlines()
         for e in searchlines:
             if e.strip('\n') == save_name.strip('\n'):
@@ -181,8 +207,7 @@ def save_file():
 
 
 def adduser():
-	#your name in place of "yourname"
-    path_user = 'C:\\Users\\yourname\\Desktop\\pythonGame\\users\\{0}.txt'.format("users")
+    path_user = os.getcwd() + '\\pythonGame\\users\\{0}.txt'.format("users")
     with open(path_user, 'a') as y:
         y.write(save_name)
         y.write("\n")
@@ -200,8 +225,7 @@ def addfile():
     global sec_question_1_answer
     global sec_question_2_answer
     global sec_question_3_answer
-	#your name in place of "yourname"
-    path = 'C:\\Users\\yourname\\Desktop\\pythonGame\\saves\\{0}.json'.format(save_name)
+    path = os.getcwd() + '\\pythonGame\\saves\\{0}.json'.format(save_name)
     create_uuid()
     find_time()
     data = {
@@ -288,18 +312,19 @@ def load_file():
     global sec_1_ans_flag
     global sec_2_ans_flag
     global sec_3_ans_flag
+    global user_name
     sec_1_ans_flag = False
     sec_2_ans_flag = False
     sec_3_ans_flag = False
     load_name = input("username: ")
-	#your name in place of "yourname"
-    path_two = 'C:\\Users\\yourname\\Desktop\\pythonGame\\saves\\{0}.json'.format(load_name)
+    path_two = os.getcwd() + '\\pythonGame\\saves\\{0}.json'.format(load_name)
     with open(path_two, 'r') as g:
         u = json.load(g)
         sec_1_ans = u['security_answer_1']
         sec_2_ans = u['security_answer_2']
         sec_3_ans = u['security_answer_3']
         friendCode = u['friend_code']
+        user_name = u['name']
     answer = input("name of father?")
     if answer == friendCode:
         with open(path_two, 'r') as f:
@@ -376,6 +401,8 @@ def load_file():
             airship.clicks_per_second = j['airship_cps']
             carrier.clicks_per_second = j['carrier_cps']
             print("Loaded " + load_name + "'s file")
+            sleep(1)
+            print("Hello " + user_name + "!")
     else:
         print("an answer was not right")
 
@@ -642,8 +669,10 @@ while True:
     print("money: $" + str(money))
     print("gems: " + str(gem))
     buying(input())
+    sleep(1)
     if loaded:
         loaded = False
         clear_screen()
     else:
         money = money + rate
+
