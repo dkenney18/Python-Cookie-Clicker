@@ -1,3 +1,16 @@
+#All imports are used as follows:
+#import time is used to create the sleep() function as well as to create the save time
+#random deals with code gen and gem gen
+#string is for code gen
+# subprocess as sp is for device spicifc screen clear
+#json is is for file save and read
+#os is for creating file structres 
+#imaplib is for the email and sms interactions
+#sys is not used at the moment
+#datetime is not used at the moment
+#email is used to read emails and do a function based on contents
+#mailbox is used with email and imaplib to select a mailbox to use
+# from imapclient import IMAPClient is used in the SMS valadation to wait for a user to input a phone number
 import time
 import random
 import string
@@ -9,11 +22,9 @@ import sys
 import datetime
 import email
 import mailbox
-import datetime
 import smtplib
-import random
-import string
 from imapclient import IMAPClient
+#all globals are defined here so as to be used in functions and definations
 global i
 global total_money
 global tax
@@ -50,6 +61,7 @@ tax = 0
 boost_rate = 1
 count = 0
 name = "guest"
+#this section below marks the beginning set up of the file structer
 file_path = os.getcwd() + "/pythonGame/users/"
 directory = os.path.dirname(file_path)
 if not os.path.exists(directory):
@@ -124,7 +136,7 @@ def SMS_setup():
 
 def validate_phone_number():
     def send_SMS(SMS_message):
-        server = smtplib.SMTP( HOST, 587 )
+        server = smtplib.SMTP(HOST, 587)
         server.starttls()
         server.login( username, password )
         server.sendmail( 'message', phonenumber, SMS_message)
@@ -201,11 +213,15 @@ def validate_phone_number():
                 print("nothing")
         except KeyboardInterrupt:
             break
-    mail.logout()
 # in this defination emailcode() you can put code to be run when a word or number or such is texted.
 def SMS_execute_code():
     global text_input
+    global money
+    global rate
+    money = money
     def readEmail():
+        global money
+        global rate
         mail = imaplib.IMAP4_SSL(HOST)
         mail.login(username, password)
         mail.list()
@@ -224,18 +240,231 @@ def SMS_execute_code():
                 for part in email_message.walk():
                     if part.get_content_type() == "text/plain":
                         body = part.get_payload(decode=True)
-                        text_input = str(body.decode('utf-8'))
+                        text_input = str(body.decode('utf-8').strip())
                         print(text_input)
-                        if text_input == "Stop":
-                            print("stop")
-                            deleteEmails()
-                            exit()
-                        elif text_input == "Repeat":
-                            print(text_input)
-                        else:
-                            print("")
-                    else:
-                        continue
+                       
+                        input_command = text_input.lower()
+                        command, what_item, number_of_item = input_command.split(" ")
+                        command = {"command": command, "item": what_item, "number": number_of_item}
+                        print("parts: command:'{command}', what_item:'{item}', number_of_item: '{number}'".format(**command))
+                        commands = ["/buy", "/sell"]
+                        items_prices = [clicker.price, grandma.price, auto_oven.price, factory.price, mine.price, epic.price, portal.price, airship.price, carrier.price]
+                        if command['command'] == commands[0]:
+                            if command['item'] == clicker.name:
+                                #working exapmle for the rest of them below is the logic to buy an item
+                                if command['item'] == clicker.name and int(money) > int(command['number']) * int(clicker.price):
+                                    print("you bought: " + str(clicker.name))
+                                    clicker.cps(clicker.clicks_per_second)
+                                    clicker.set_rate()
+                                    rate = rate + (clicker.clicks_per_second * int(command['number']))
+                                    money = int(money) - (int(clicker.price) * int(command['number']))
+                                    clicker.num_bought = clicker.num_bought +  int(command['number'])
+                                    print("number bought:{number}".format(**command))
+                                    loaded = True
+                                else:
+                                    print("not enough")
+                                    continue
+                            elif command['item'] == grandma.name:
+                                if command['item'] == grandma.name and int(money) > int(command['number']) * int(grandma.price):
+                                    print("you bought a " + str(grandma.name))
+                                    grandma.cps(grandma.clicks_per_second)
+                                    grandma.set_rate()
+                                    rate = rate + (grandma.clicks_per_second * int(command['number']))
+                                    money = int(money) - (int(grandma.price) * int(command['number']))
+                                    grandma.num_bought = grandma.num_bought +  int(command['number'])
+                                    print("number bought:{number}".format(**command))
+                                    loaded = True
+                                else:
+                                    print("not enough")
+                                    continue
+                            elif command['item'] == auto_oven.name:
+                                if command['item'] == auto_oven.name and int(money) > int(ommand['number']) * int(auto_oven.price):
+                                    print("you bought a " + str(auto_oven.name))
+                                    auto_oven.cps(auto_oven.clicks_per_second)
+                                    auto_oven.set_rate()
+                                    rate = rate + (auto_oven.clicks_per_second * int(command['number']))
+                                    money = int(money) - (int(auto_oven.price) * int(command['number']))
+                                    auto_oven.num_bought = auto_oven.num_bought +  int(command['number'])
+                                    print("number bought:{number}".format(**command))
+                                    loaded = True
+                                else:
+                                    print("not enough")
+                                    continue
+                            elif command['item'] == factory.name:
+                                if command['item'] == factory.name and int(money) > int(command['number']) * int(factory.price):
+                                    print("you bought a " + str(factory.name))
+                                    factory.cps(factory.clicks_per_second)
+                                    factory.set_rate()
+                                    rate = rate + (factory.clicks_per_second * int(command['number']))
+                                    money = int(money) - (int(factory.price) * int(command['number']))
+                                    factory.num_bought = factory.num_bought +  int(command['number'])
+                                    print("number bought:{number}".format(**command))
+                                    loaded = True
+                                else:
+                                    print("not enough")
+                                    continue
+                            elif command['item'] == mine.name:
+                                if command['item'] == mine.name and int(money) > int(command['number']) * int(mine.price):
+                                    print("you bought a " + str(mine.name))
+                                    mine.cps(mine.clicks_per_second)
+                                    mine.set_rate()
+                                    rate = rate + (mine.clicks_per_second * int(command['number']))
+                                    money = int(money) - (int(mine.price) * int(command['number']))
+                                    mine.num_bought = mine.num_bought +  int(command['number'])
+                                    print("number bought:{number}".format(**command))
+                                    loaded = True
+                                else:
+                                    print("not enough")
+                                    continue
+                            elif command['item'] == epic.name:
+                                if command['item'] == epic.name and int(money) > int(command['number']) * int(epic.price):
+                                    print("you bought a " + str(epic.name))
+                                    epic.cps(epic.clicks_per_second)
+                                    epic.set_rate()
+                                    rate = rate + (epic.clicks_per_second * int(command['number']))
+                                    money = int(money) - (int(epic.price) * int(command['number']))
+                                    epic.num_bought = epic.num_bought +  int(command['number'])
+                                    print("number bought:{number}".format(**command))
+                                    loaded = True
+                                else:
+                                    print("not enough")
+                                    continue
+                            elif command['item'] == portal.name:
+                                if command['item'] == portal.name and int(money) > int(command['number']) * int(portal.price):
+                                    print("you bought a " + str(portal.name))
+                                    portal.cps(portal.clicks_per_second)
+                                    portal.set_rate()
+                                    rate = rate + (portal.clicks_per_second * int(command['number']))
+                                    money = int(money) - (int(portal.price) * int(command['number']))
+                                    portal.num_bought = portal.num_bought +  int(command['number'])
+                                    print("number bought:{number}".format(**command))
+                                    loaded = True
+                                else:
+                                    print("not enough")
+                                    continue
+                            elif command['item'] == airship.name:
+                                if command['item'] == airship.name and int(money) > int(command['number']) * int(airship.price):
+                                    print("you bought a " + str(airship.name))
+                                    airship.cps(airship.clicks_per_second)
+                                    airship.set_rate()
+                                    rate = rate + (airship.clicks_per_second * int(command['number']))
+                                    money = int(money) - (int(airship.price) * int(command['number']))
+                                    airship.num_bought = airship.num_bought +  int(command['number'])
+                                    print("number bought:{number}".format(**command))
+                                    loaded = True
+                                else:
+                                    print("not enough")
+                                    continue
+                            elif command['item'] == carrier.name:
+                                if command['item'] == carrier.name and int(money) > int(command['number']) * int(carrier.price):
+                                    print("you bought a " + str(carrier.name))
+                                    carrier.cps(carrier.clicks_per_second)
+                                    carrier.set_rate()
+                                    rate = rate + (carrier.clicks_per_second * int(command['number']))
+                                    money = int(money) - (int(carrier.price) * int(command['number']))
+                                    carrier.num_bought = carrier.num_bought +  int(command['number'])
+                                    print("number bought:{number}".format(**command))
+                                    loaded = True
+                                else: 
+                                    print("not enough")
+                                    continue
+                            else:
+                                print("could not find that name")
+                                continue
+                        if command['command'] == commands[1]:
+                                if command['item'] == clicker.name:
+                                    if int(command['number']) <= int(clicker.num_bought):
+                                        money = money + int(command['number']) * int(clicker.price)
+                                        clicker.num_bought = clicker.num_bought - int(command['number'])
+                                        rate = rate - (clicker.clicks_per_second * int(command['number']))
+                                        loaded = True
+                                    else:
+                                        print("too many items") 
+                                        continue
+                                    print("number sold:{number}".format(**command))
+                                elif command['item'] == grandma.name:
+                                    if int(command['number']) <= int(grandma.num_bought):
+                                        money = int(command['number']) * int(grandma.price)
+                                        grandma.num_bought = grandma.num_bought - int(command['number'])
+                                        rate = rate - (grandma.clicks_per_second * int(command['number']))
+                                        loaded = True
+                                    else:
+                                        print("too many items") 
+                                        continue
+                                    print("number sold:{number}".format(**command))
+                                elif command['item'] == auto_oven.name:
+                                    if int(command['number']) <= int(auto_oven.num_bought):
+                                        money = int(command['number']) * int(auto_oven.price)
+                                        auto_oven.num_bought = auto_oven.num_bought - int(command['number'])
+                                        rate = rate - (auto_oven.clicks_per_second * int(command['number']))
+                                        loaded = True
+                                    else:
+                                        print("too many items") 
+                                        continue
+                                    print("number sold:{number}".format(**command))
+                                elif command['item'] == factory.name:
+                                    if int(command['number']) <= int(factory.num_bought):
+                                        money = int(command['number']) * int(factory.price)
+                                        factory.num_bought = factory.num_bought - int(command['number'])
+                                        rate = rate - (factory.clicks_per_second * int(command['number']))
+                                        loaded = True
+                                    else:
+                                        print("too many items") 
+                                        continue
+                                    print("number sold:{number}".format(**command))
+                                elif command['item'] == mine.name:
+                                    if int(command['number']) <= int(mine.num_bought):
+                                        money = int(command['number']) * int(mine.price)
+                                        mine.num_bought = mine.num_bought - int(command['number'])
+                                        rate = rate - (mine.clicks_per_second * int(command['number']))
+                                        loaded = True
+                                    else:
+                                        print("too many items") 
+                                        continue
+                                    print("number sold:{number}".format(**command))
+                                elif command['item'] == epic.name:
+                                    if int(command['number']) <= int(epic.num_bought):
+                                        money = int(command['number']) * int(epic.price)
+                                        epic.num_bought = epic.num_bought - int(command['number'])
+                                        rate = rate - (epic.clicks_per_second * int(command['number']))
+                                        loaded = True
+                                    else:
+                                        print("too many items") 
+                                        continue
+                                    print("number sold:{number}".format(**command))
+                                elif command['item'] == portal.name:
+                                    if int(command['number']) <= int(portal.num_bought):
+                                        money = int(command['number']) * int(portal.price)
+                                        portal.num_bought = portal.num_bought - int(command['number'])
+                                        rate = rate - (portal.clicks_per_second * int(command['number']))
+                                        loaded = True
+                                    else:
+                                        print("too many items") 
+                                        continue
+                                    print("number sold:{number}".format(**command))
+                                elif command['item'] == airship.name:
+                                    if int(command['number']) <= int(airship.num_bought):
+                                        money = int(command['number']) * int(airship.price)
+                                        airship.num_bought = airship.num_bought - int(command['number'])
+                                        rate = rate - (airship.clicks_per_second * int(command['number']))
+                                        loaded = True
+                                    else:
+                                        print("too many items")
+                                        continue 
+                                    print("number sold:{number}".format(**command))
+                                elif command['item'] == carrier.name:
+                                    if int(command['number']) <= int(carrier.num_bought):
+                                        money = int(command['number']) * int(carrier.price)
+                                        carrier.num_bought = carrier.num_bought - int(command['number'])
+                                        rate = rate - (carrier.clicks_per_second * int(command['number']))
+                                        loaded = True
+                                    else:
+                                        print("too many items")
+                                        continue 
+                                    print("number sold:{number}".format(**command))
+                                else:
+                                    print("could not find that name to sell")
+                                    continue
     def deleteEmails():
         mail = imaplib.IMAP4_SSL(HOST)
         connection_message = mail.login(username, password)
@@ -255,17 +484,20 @@ def SMS_execute_code():
             mail.expunge()
 
         print("Done!")
+        loaded = True
     server_alert = IMAPClient(HOST)
     server_alert.login(username, password)
     server_alert.select_folder('INBOX')
     server_alert.idle()
     print("Connection is now in IDLE mode, send yourself an email or quit with ^c")
+    print("commands are like so '/COMMAND NAME optional number' example is /BUY clicker 10")
 
     while True:
         try:
             # Wait for up to 30 seconds for an IDLE response
             responses = server_alert.idle_check(timeout=30)
             if responses:
+                loaded = True
                 readEmail()
                 deleteEmails()
                 return False
@@ -281,7 +513,7 @@ def SMS_execute_code():
 
 ##############################################
 
-
+# a non working investment idea
 def invest():
     global tax
     global total_money
@@ -290,7 +522,7 @@ def invest():
     total_money = tax * money
     money = total_money - money
 
-
+# an attemnt to create user interactivity
 def good_sayings():
     sayings = ["good choice {0}".format(name), "Is there no end to {0}'s choices?".format(name),
                "only less then what {0} wants".format(name),
@@ -298,9 +530,10 @@ def good_sayings():
                "{0} likes this".format(name), "you are awesome {0}".format(name), "{0} buys great things".format(name)]
     print(sayings[random.randrange(0, len(sayings))])
 
-
+# the heart of the program the clicker class
 class Clicker:
     def __init__(self, name):
+        #defining the varaibles used in the class
         self.name = name
         self.price = 0
         self.clicks_per_second = 0
@@ -310,35 +543,42 @@ class Clicker:
         self.k = ""
         self.key = ""
         self.num_bought = 0
+        self.nb = 0
+        self.num_b = 0
 
     def cps(self, c):
+        #the amount that the rate is rased by
         self.c = c
         self.clicks_per_second = self.c
 
     def cost(self, p):
+        #the cost of the clicker object
         self.p = p
         self.price = self.p
 
     def set_rate(self):
+        #seting the rate 
         self.rate = self.clicks_per_second + self.rate
 
     def key_bind(self, k):
+        #custom keybinding 
         self.k = k
         self.key = self.k
 
-    def add_num_bought(self):
-        self.num_bought += 1
-
     def print_cps(self):
+        #to print the clickes per second
         print("clicks per second is: " + str(self.clicks_per_second))
 
     def print_prices(self):
+        #to pring the prices
         print("price = " + str(self.price))
 
     def print_name(self):
+        #to print the name
         print(self.name)
 
     def print_rate(self):
+        #to print the current rate
         print("your current rate is: " + str(self.rate))
 
 
@@ -381,7 +621,7 @@ epic.key_bind('6')
 portal.key_bind('7')
 airship.key_bind('8')
 carrier.key_bind('9')
-
+###
 
 def clear_screen():
     sp.call('cls', shell=True)
@@ -831,8 +1071,6 @@ def change_cps():
         carrier.clicks_per_second = int(input("new clicks per sec: "))
     else:
         print("try again name not found")
-
-
 def buying(ans):
     global money
     global rate
@@ -850,7 +1088,7 @@ def buying(ans):
         clicker.set_rate()
         rate = rate + clicker.clicks_per_second
         money = money - clicker.price
-        clicker.add_num_bought()
+        clicker.num_bought = clicker.num_bought + 1
         loaded = True
 
     elif ans == grandma.key and money > grandma.price:
@@ -859,7 +1097,7 @@ def buying(ans):
         grandma.set_rate()
         rate = rate + grandma.clicks_per_second
         money = money - grandma.price
-        grandma.add_num_bought()
+        grandma.num_bought = grandma.num_bought + 1
         loaded = True
 
     elif ans == auto_oven.key and money > auto_oven.price:
@@ -868,7 +1106,7 @@ def buying(ans):
         auto_oven.set_rate()
         rate = rate + auto_oven.clicks_per_second
         money = money - auto_oven.price
-        auto_oven.add_num_bought()
+        auto_oven.num_bought = auto_oven.num_bought + 1
         loaded = True
 
     elif ans == factory.key and money > factory.price:
@@ -877,7 +1115,7 @@ def buying(ans):
         factory.set_rate()
         rate = rate + factory.clicks_per_second
         money = money - factory.price
-        factory.add_num_bought()
+        factory.num_bought = factory.num_bought + 1
         loaded = True
 
     elif ans == mine.key and money > mine.price:
@@ -886,7 +1124,7 @@ def buying(ans):
         mine.set_rate()
         rate = rate + mine.clicks_per_second
         money = money - mine.price
-        mine.add_num_bought()
+        mine.num_bought = mine.num_bought + 1
         loaded = True
 
     elif ans == epic.key and money > epic.price:
@@ -895,7 +1133,7 @@ def buying(ans):
         epic.set_rate()
         rate = rate + epic.clicks_per_second
         money = money - epic.price
-        epic.add_num_bought()
+        epic.num_bought = epic.num_bought + 1
         loaded = True
 
     elif ans == portal.key and money > portal.price:
@@ -904,7 +1142,7 @@ def buying(ans):
         portal.set_rate()
         rate = rate + portal.clicks_per_second
         money = money - portal.price
-        portal.add_num_bought()
+        portal.num_bought = portal.num_bought + 1
         loaded = True
 
     elif ans == airship.key and money > airship.price:
@@ -913,7 +1151,7 @@ def buying(ans):
         airship.set_rate()
         rate = rate + airship.clicks_per_second
         money = money - airship.price
-        airship.add_num_bought()
+        airship.num_bought = airship.num_bought + 1
         loaded = True
 
     elif ans == carrier.key and money > carrier.price:
@@ -922,7 +1160,7 @@ def buying(ans):
         carrier.set_rate()
         rate = rate + carrier.clicks_per_second
         money = money - carrier.price
-        carrier.add_num_bought()
+        carrier.num_bought = carrier.num_bought + 1
         loaded = True
 
     elif ans == 'change keys':
@@ -964,51 +1202,6 @@ def buying(ans):
         print(airship.num_bought)
         print(carrier.num_bought)
         loaded = True
-
-    elif ans == "upgrade":
-        print("hello")
-        print("select item to upgrade")
-        print("1 = " + clicker.name)
-        print("2 = " + grandma.name)
-        print("3 = " + auto_oven.name)
-        print("4 = " + factory.name)
-        print("5 = " + mine.name)
-        print("6 = " + epic.name)
-        print("7 = " + portal.name)
-        print("8 = " + airship.name)
-        print("9 = " + carrier.name)
-        ans_m1 = input("select the number of the item you want to upgrade")
-        if ans_m1 == "1":
-            print("select upgrades for " + clicker.name)
-            print("1 = pointer finger(clicker is twice as effective as bofore) cost: $100")
-            print("2 = Carpel tunnel(clicker if twice as effective as before) cost: $500")
-            print("3 = both hands(clicker is twice as effective as before) cost: $10,000")
-            print("4 = thousand fingers of doom(clicker gets +0.1 cookies for every non clicker item owned)"
-                  " cost: $100,000")
-            print("5 = million fingers of doom(clicker gets +0.5 cookies for every non clicker item owned)"
-                  " cost: $10 million")
-            print("6 = billion fingers of doom(clicker gets +5 cookies for evey non clicker item owned)  cost: $100 "
-                  "million")
-            print("7 = trillion fingers of doom(clicker gets +50 cookies for every non clicker item owned)  cost: $1 "
-                  "billion")
-            print("8 = quadrillion fingers of doom(clicker gets +500 cookies for every non clicker item owned)  cost: "
-                  "$10 billion")
-            print("9 = quintillion fingers of doom(clicker gets +5,000 cookies for every non clicker item owned)   "
-                  "cost: $10 trillion")
-            print("10 = sextillion fingers of doom(clicker gets +50,000 cookies for every non clicker item owned)  "
-                  "cost: $10 quadrillion")
-            print("11 = septillion fingers of doom(clicker gets +500,00 cookies for every non clicker item owned)  "
-                  "cost: $10 sextillion")
-            print("12 = octillion fingers of doom(clicker gets +5 million cookies for every non clicker item owned) "
-                  "cost: $1 billion")
-            ans_m2 = input("select upgrade")
-            if ans_m2 == "1" and clicker.num_bought >= 1 and money > 1:
-                clicker.clicks_per_second = int(clicker.clicks_per_second * clicker.clicks_per_second)
-                print("you bought pointer finger")
-                money = money - 1
-                loaded = True
-            else:
-                print("not enough")
     elif ans == 'boost':
         b = input("how many seconds do you want to boost? ")
         if gem > int(b):
@@ -1029,7 +1222,6 @@ def buying(ans):
         validate_phone_number()
     elif ans == 'SMS_code':
         SMS_execute_code()
-
 
 while True:
 ###############################################
